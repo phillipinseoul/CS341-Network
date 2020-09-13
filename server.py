@@ -9,7 +9,9 @@ def route_hello_world():
 
 @app.route('/hash', methods=['GET'])
 def route_hash():
-    return json.dumps({'result': 'HASHED_VALUE'})
+    name = request.args.get('name')
+    HASHED_VALUE = hashlib.sha256(name.encode()).hexdigest()
+    return json.dumps({'result': f'{HASHED_VALUE}'})
 
 @app.route('/collatz', methods=['POST'])
 def route_collatz():
