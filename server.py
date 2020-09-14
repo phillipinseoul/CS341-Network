@@ -15,9 +15,7 @@ def route_hash():
 
 @app.route('/collatz', methods=['POST'])
 def route_collatz():
-    # recv = request.get_json()
-
-    number = request.form.get("number")
+    number = int(request.form.get("number"))
     
     if number % 2 == 1:
         NEXT_COLLATZ_NUMBER = 3 * number + 1

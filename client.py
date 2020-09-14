@@ -17,6 +17,15 @@ print(hash_res)
 data = {"name": name, "hash": hash_res, "number": number}
 
 collatz = requests.post(url + "/collatz", data=data).json()
+res = int(collatz['result'])
+print(res)
 
-print(collatz['result'])
+
+while res != 1:
+    data["number"] = res
+    collatz = requests.post(url + "/collatz", data=data).json()
+    res = int(collatz['result'])
+    print(res)
+
+    
 
