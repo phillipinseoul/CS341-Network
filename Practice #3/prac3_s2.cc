@@ -150,14 +150,13 @@ int main(int argc, char *argv[])
   CommandLine cmd(__FILE__);
   cmd.Parse(argc, argv);
 
-  // Create node 0 ~ 4
+  // Create node 0 ~ 3
   NS_LOG_INFO("Create nodes.");
   NodeContainer c;
-  c.Create(5);
+  c.Create(4);
   NodeContainer n1n0 = NodeContainer(c.Get(1), c.Get(0));
   NodeContainer n2n1 = NodeContainer(c.Get(2), c.Get(1));
   NodeContainer n3n1 = NodeContainer(c.Get(3), c.Get(1));
-  NodeContainer n4n1 = NodeContainer(c.Get(4), c.Get(1));
 
   InternetStackHelper internet;
   internet.Install(c);
