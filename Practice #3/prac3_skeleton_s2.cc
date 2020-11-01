@@ -139,7 +139,7 @@ void ReceivedBytes(Ptr<OutputStreamWrapper> stream)
                        << (sink1->GetTotalRx() - lastTotalRx1) *8 / 0.1 * 1e-6 << "\t"  // throughput for App (b)
                        << sink1->GetTotalRx() << "\t"                                   // received bytes in sink1
                        << (sink2->GetTotalRx() - lastTotalRx2) *8 / 0.1 * 1e-6 << "\t"  // throughput for App (a)
-                       << sink2-> GetTotalRx() << "\t" << std::endl                     // received bytes in sink2
+                       << sink2-> GetTotalRx() << "\t" << std::endl;                     // received bytes in sink2
   lastTotalRx1 = sink1->GetTotalRx();
   lastTotalRx2 = sink2->GetTotalRx();
   Simulator::Schedule(MilliSeconds(100), &ReceivedBytes, stream);
@@ -239,7 +239,14 @@ int main(int argc, char *argv[])
       "CongestionWindow",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_s2.cwnd")));
+          asciiTraceHelper.CreateFileStream("prac3_s2_app1.cwnd")));
+
+  ns3TcpSocket2->TraceConnectWithoutContext(
+      "CongestionWindow",
+      MakeBoundCallback(
+          &NotifyChange,
+          asciiTraceHelper.CreateFileStream("prac3_s2_app2.cwnd")));
+  
 
   ns3TcpSocket1->TraceConnectWithoutContext(
       "SlowStartThreshold",
