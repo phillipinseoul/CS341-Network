@@ -219,12 +219,22 @@ int main(int argc, char *argv[])
 
   // Add a sink app in port 8081 for App (b)
   uint16_t sinkPort2 = 8081;
-  Address sinkAddress(InetSocketAddress(i1i0.GetAddress(1), sinkPort2));
+  Address sinkAddress2(InetSocketAddress(i1i0.GetAddress(1), sinkPort2));
   PacketSinkHelper packetSinkHelper2("ns3::TcpSocketFactory", InetSocketAddress(Ipv4Address::GetAny(), sinkPort2));
   ApplicationContainer sinkApp2 = packetSinkHelper2.Install(c.Get(0));
   sink2 = StaticCast<PacketSink>(sinkApp2.Get(0));
   sinkApp2.Start(Seconds(0.));
   sinkApp2.Stop(Seconds(120.));
+
+  // Add a sink app in port 8082 for App (c)
+  uint16_t sinkPort3 = 8082;
+  Address sinkAddress3(InetSocketAddress(i1i0.GetAddress(1), sinkPort3));
+  PacketSinkHelper packetSinkHelper3("ns3::TcpSocketFactory", InetSocketAddress(Ipv4Address::GetAny(), sinkPort3));
+  ApplicationContainer sinkApp3 = packetSinkHelper3.Install(c.Get(0));
+  sink3 = StaticCast<PacketSink>(sinkApp3.Get(0));
+  sinkApp3.Start(Seconds(0.));
+  sinkApp3.Stop(Seconds(120.));
+
 
   // Create App (a)
   Ptr<Socket> ns3TcpSocket1 = Socket::CreateSocket(c.Get(2), TcpSocketFactory::GetTypeId());
@@ -237,10 +247,18 @@ int main(int argc, char *argv[])
   // Create App (b)
   Ptr<Socket> ns3TcpSocket2 = Socket::CreateSocket(c.Get(3), TcpSocketFactory::GetTypeId());
   Ptr<MyApp> app2 = CreateObject<MyApp>();
-  app2->Setup(ns3TcpSocket2, sinkAddress, 1000, 25000, DataRate("5Mbps"));
+  app2->Setup(ns3TcpSocket2, sinkAddress2, 1000, 25000, DataRate("5Mbps"));
   c.Get(3)->AddApplication(app2);
   app2->SetStartTime(Seconds(15.)); // app starts at t=15s
   app2->SetStopTime(Seconds(120.));
+
+  // Create App (c)
+  Ptr<Socket> ns3TcpSocket3 = Socket::CreateSocket(c.Get(4), TcpSocketFactory::GetTypeId());
+  Ptr<MyApp> app3 = CreateObject<MyApp>();
+  app3->Setup(ns3TcpSocket3, sinkAddress3, 1000, 5000, DataRate("1Mbps"));
+  c.Get(4)->AddApplication(app3);
+  app3->SetStartTime(Seconds(30.)); // app starts at t=15s
+  app3->SetStopTime(Seconds(120.));
 
 
   AsciiTraceHelper asciiTraceHelper;
