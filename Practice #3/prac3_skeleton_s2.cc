@@ -235,24 +235,33 @@ int main(int argc, char *argv[])
                       &ReceivedBytes,
                       asciiTraceHelper.CreateFileStream("prac3_s2.rx"));
 
+  // Save cwnd changes App (a)
   ns3TcpSocket1->TraceConnectWithoutContext(
       "CongestionWindow",
       MakeBoundCallback(
           &NotifyChange,
           asciiTraceHelper.CreateFileStream("prac3_s2_app1.cwnd")));
 
+  // Save cwnd changes App (b)
   ns3TcpSocket2->TraceConnectWithoutContext(
       "CongestionWindow",
       MakeBoundCallback(
           &NotifyChange,
           asciiTraceHelper.CreateFileStream("prac3_s2_app2.cwnd")));
-  
 
+  // Save ssthresh of App (a)
   ns3TcpSocket1->TraceConnectWithoutContext(
       "SlowStartThreshold",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_s2.ssthresh")));
+          asciiTraceHelper.CreateFileStream("prac3_s2_app1.ssthresh")));
+
+  // Save ssthresh of App (b)
+  ns3TcpSocket2->TraceConnectWithoutContext(
+      "SlowStartThreshold",
+      MakeBoundCallback(
+          &NotifyChange,
+          asciiTraceHelper.CreateFileStream("prac3_s2_app2.ssthresh")));
 
   Simulator::Stop(Seconds(120));
   Simulator::Run();
