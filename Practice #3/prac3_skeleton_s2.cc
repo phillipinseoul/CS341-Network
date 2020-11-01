@@ -128,6 +128,7 @@ NotifyChange(Ptr<OutputStreamWrapper> stream, uint32_t oldval, uint32_t newval)
 
 
 Ptr<PacketSink> sink1;     /* Pointer to the packet sink application */
+Ptr<PacketSink> sink2;    
 uint64_t lastTotalRx1(0);  /* The value of the last total received bytes */
 
 void ReceivedBytes(Ptr<OutputStreamWrapper> stream)
