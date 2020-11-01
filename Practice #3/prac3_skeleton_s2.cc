@@ -130,14 +130,18 @@ NotifyChange(Ptr<OutputStreamWrapper> stream, uint32_t oldval, uint32_t newval)
 Ptr<PacketSink> sink1;     /* Pointer to the packet sink application */
 Ptr<PacketSink> sink2;    
 uint64_t lastTotalRx1(0);  /* The value of the last total received bytes */
+uint64_t lastTotalRx2(0);
 
 void ReceivedBytes(Ptr<OutputStreamWrapper> stream)
 {
   Time now = Simulator::Now();                                         /* Return the simulator's virtual time. */
   *stream->GetStream() << now.GetSeconds() << "\t"
-                       << (sink1->GetTotalRx() - lastTotalRx1) *8 / 0.1 * 1e-6 << "\t" // throughput in Mbps
-                       << sink1->GetTotalRx() << "\t" << std::endl; // received bytes in sink1
+                       << (sink1->GetTotalRx() - lastTotalRx1) *8 / 0.1 * 1e-6 << "\t"  // throughput for App (b)
+                       << sink1->GetTotalRx() << "\t"                                   // received bytes in sink1
+                       << (sink2->GetTotalRx() - lastTotalRx2) *8 / 0.1 * 1e-6 << "\t"  // throughput for App (a)
+                       << sink2-> GetTotalRx() << "\t" << std::endl                     // received bytes in sink2
   lastTotalRx1 = sink1->GetTotalRx();
+  lastTotalRx2 = sink2->GetTotalRx();
   Simulator::Schedule(MilliSeconds(100), &ReceivedBytes, stream);
 }
 
