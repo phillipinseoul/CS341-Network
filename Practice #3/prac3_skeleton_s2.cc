@@ -198,6 +198,15 @@ int main(int argc, char *argv[])
   sinkApp1.Start(Seconds(0.)); //sink apps run from t=0s
   sinkApp1.Stop(Seconds(120.));
 
+  // Add a sink app in port 8081 for App (b)
+  uint16_t sinkPort2 = 8081;
+  Address sinkAddress(InetSocketAddress(i1i0.GetAddress(1), sinkPort2));
+  PacketSinkHelper packetSinkHelper2("ns3::TcpSocketFactory", InetSocketAddress(Ipv4Address::GetAny(), sinkPort2));
+  ApplicationContainer sinkApp2 = packetSinkHelper2.Install(c.Get(0));
+  sink2 = StaticCast<PacketSink>(sinkApp2.Get(0));
+  sinkApp2.Start(Seconds(0.));
+  sinkApp2.Stop(Seconds(120.));
+
 
   Ptr<Socket> ns3TcpSocket1 = Socket::CreateSocket(c.Get(2), TcpSocketFactory::GetTypeId());
   Ptr<MyApp> app1 = CreateObject<MyApp>();
