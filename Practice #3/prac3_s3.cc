@@ -128,9 +128,11 @@ NotifyChange(Ptr<OutputStreamWrapper> stream, uint32_t oldval, uint32_t newval)
 
 
 Ptr<PacketSink> sink1;     /* Pointer to the packet sink application */
-Ptr<PacketSink> sink2;    
+Ptr<PacketSink> sink2;
+Ptr<PacketSink> sink3;    
 uint64_t lastTotalRx1(0);  /* The value of the last total received bytes */
 uint64_t lastTotalRx2(0);
+uint64_t lastTotalRx3(0);
 
 void ReceivedBytes(Ptr<OutputStreamWrapper> stream)
 {
@@ -257,7 +259,7 @@ int main(int argc, char *argv[])
   Ptr<MyApp> app3 = CreateObject<MyApp>();
   app3->Setup(ns3TcpSocket3, sinkAddress3, 1000, 5000, DataRate("1Mbps"));
   c.Get(4)->AddApplication(app3);
-  app3->SetStartTime(Seconds(30.)); // app starts at t=15s
+  app3->SetStartTime(Seconds(30.)); // app starts at t=30s
   app3->SetStopTime(Seconds(120.));
 
 
@@ -265,7 +267,7 @@ int main(int argc, char *argv[])
 
   Simulator::Schedule(Seconds(1.1),
                       &ReceivedBytes,
-                      asciiTraceHelper.CreateFileStream("prac3_s2.rx"));
+                      asciiTraceHelper.CreateFileStream("prac3_s3_throughput.rx"));
 
   // Save cwnd changes App (a)
   ns3TcpSocket1->TraceConnectWithoutContext(
@@ -281,6 +283,13 @@ int main(int argc, char *argv[])
           &NotifyChange,
           asciiTraceHelper.CreateFileStream("prac3_s2_app2.cwnd")));
 
+  // Save cwnd changes App (b)
+  ns3TcpSocket3->TraceConnectWithoutContext(
+      "CongestionWindow",
+      MakeBoundCallback(
+          &NotifyChange,
+          asciiTraceHelper.CreateFileStream("prac3_s2_app3.cwnd")));
+
   // Save ssthresh of App (a)
   ns3TcpSocket1->TraceConnectWithoutContext(
       "SlowStartThreshold",
@@ -294,6 +303,13 @@ int main(int argc, char *argv[])
       MakeBoundCallback(
           &NotifyChange,
           asciiTraceHelper.CreateFileStream("prac3_s2_app2.ssthresh")));
+
+  // Save ssthresh of App (a)
+  ns3TcpSocket3->TraceConnectWithoutContext(
+      "SlowStartThreshold",
+      MakeBoundCallback(
+          &NotifyChange,
+          asciiTraceHelper.CreateFileStream("prac3_s2_app3.ssthresh")));
 
   Simulator::Stop(Seconds(120));
   Simulator::Run();
