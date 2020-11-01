@@ -141,9 +141,12 @@ void ReceivedBytes(Ptr<OutputStreamWrapper> stream)
                        << (sink1->GetTotalRx() - lastTotalRx1) *8 / 0.1 * 1e-6 << "\t"  // throughput for App (b)
                        << sink1->GetTotalRx() << "\t"                                   // received bytes in sink1
                        << (sink2->GetTotalRx() - lastTotalRx2) *8 / 0.1 * 1e-6 << "\t"  // throughput for App (a)
-                       << sink2-> GetTotalRx() << "\t" << std::endl;                     // received bytes in sink2
+                       << sink2-> GetTotalRx() << "\t" <<                                // received bytes in sink2
+                       << (sink3->GetTotalRx() - lastTotalRx3) *8 / 0.1 * 1e-6 << "\t"  // throughput for App (c)
+                       << sink3->GetTotalRx() << "\t" << std::endl;                     // received bytes sink3
   lastTotalRx1 = sink1->GetTotalRx();
   lastTotalRx2 = sink2->GetTotalRx();
+  lastTotalRx3 = sink3->GetTotalRx();
   Simulator::Schedule(MilliSeconds(100), &ReceivedBytes, stream);
 }
 
