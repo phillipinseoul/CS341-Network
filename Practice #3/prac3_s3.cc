@@ -165,18 +165,26 @@ int main(int argc, char *argv[])
   // We create the channels first without any IP addressing information
   NS_LOG_INFO("Create channels.");
   PointToPointHelper p2p;
+  
+  // Connect n0 - n1
   p2p.SetDeviceAttribute("DataRate", StringValue("2Mbps"));
   p2p.SetChannelAttribute("Delay", StringValue("10ms"));
   NetDeviceContainer d1d0 = p2p.Install(n1n0);
 
+  // Connect n2 - n1
   p2p.SetDeviceAttribute("DataRate", StringValue("2Mbps"));
   p2p.SetChannelAttribute("Delay", StringValue("10ms"));
   NetDeviceContainer d2d1 = p2p.Install(n2n1);
 
-  // Connect node 3
+  // Connect n3 - n1
   p2p.SetDeviceAttribute("DataRate", StringValue("5Mbps"));
   p2p.SetChannelAttribute("Delay", StringValue("10ms"));
   NetDeviceContainer d3d1 = p2p.Install(n3n1);
+
+  // Connect n4 - n1
+  p2p.SetDeviceAttribute("DataRate", StringValue("1Mbps"));
+  p2p.SetChannelAttribute("Delay", StringValue("10ms"));
+  NetDeviceContainer d4d1 = p2p.Install(n4n1);
 
   // Later, we add IP addresses.
   NS_LOG_INFO("Assign IP Addresses.");
