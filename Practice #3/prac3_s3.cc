@@ -186,6 +186,7 @@ int main(int argc, char *argv[])
   p2p.SetChannelAttribute("Delay", StringValue("10ms"));
   NetDeviceContainer d4d1 = p2p.Install(n4n1);
 
+
   // Later, we add IP addresses.
   NS_LOG_INFO("Assign IP Addresses.");
   Ipv4AddressHelper ipv4;
@@ -199,6 +200,10 @@ int main(int argc, char *argv[])
   // Assign IP address to node 3
   ipv4.SetBase("10.1.3.0", "255.255.255.0");
   Ipv4InterfaceContainer i3i1 = ipv4.Assign(d3d1);
+
+  // Assign IP address to node 4
+  ipv4.SetBase("10.1.4.0", "255.255.255.0");
+  Ipv4InterfaceContainer i4i1 = ipv4.Assign(d4d1);
 
   Ipv4GlobalRoutingHelper::PopulateRoutingTables();
 
