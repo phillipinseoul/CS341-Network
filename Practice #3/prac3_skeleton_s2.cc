@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
   sinkApp2.Start(Seconds(0.));
   sinkApp2.Stop(Seconds(120.));
 
-
+  // Create App (a)
   Ptr<Socket> ns3TcpSocket1 = Socket::CreateSocket(c.Get(2), TcpSocketFactory::GetTypeId());
   Ptr<MyApp> app1 = CreateObject<MyApp>();
   app1->Setup(ns3TcpSocket1, sinkAddress1, 1000, 25000, DataRate("2Mbps"));
@@ -215,24 +215,32 @@ int main(int argc, char *argv[])
   app1->SetStartTime(Seconds(1.)); //app starts at t=1s
   app1->SetStopTime(Seconds(120.));
 
+  // Create App (b)
+  Ptr<Socket> ns3TcpSocket2 = Socket::CreateSocket(c.Get(3), TcpSocketFactory::GetTypeId());
+  Ptr<MyApp> app2 = CreateObject<MyApp>();
+  app2->Setup(ns3TcpSocket2, sinkAddress, 1000, 25000, DataRate("5Mbps"));
+  c.Get(3)->AddApplication(app2);
+  app2->SetStartTime(Seconds(15.)); // app starts at t=15s
+  app2->SetStopTime(Seconds(120.));
+
 
   AsciiTraceHelper asciiTraceHelper;
 
   Simulator::Schedule(Seconds(1.1),
                       &ReceivedBytes,
-                      asciiTraceHelper.CreateFileStream("prac3.rx"));
+                      asciiTraceHelper.CreateFileStream("prac3_s2.rx"));
 
   ns3TcpSocket1->TraceConnectWithoutContext(
       "CongestionWindow",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_app1.cwnd")));
+          asciiTraceHelper.CreateFileStream("prac3_s2.cwnd")));
 
   ns3TcpSocket1->TraceConnectWithoutContext(
       "SlowStartThreshold",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_app1.ssthresh")));
+          asciiTraceHelper.CreateFileStream("prac3_s2.ssthresh")));
 
   Simulator::Stop(Seconds(120));
   Simulator::Run();
