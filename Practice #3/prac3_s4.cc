@@ -276,49 +276,49 @@ int main(int argc, char *argv[])
 
   Simulator::Schedule(Seconds(1.1),
                       &ReceivedBytes,
-                      asciiTraceHelper.CreateFileStream("prac3_s3_throughput.rx"));
+                      asciiTraceHelper.CreateFileStream("prac3_s4_throughput.rx"));
 
   // Save cwnd changes App (a)
   ns3TcpSocket1->TraceConnectWithoutContext(
       "CongestionWindow",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_s3_app1.cwnd")));
+          asciiTraceHelper.CreateFileStream("prac3_s4_app1.cwnd")));
 
   // Save cwnd changes App (b)
   ns3TcpSocket2->TraceConnectWithoutContext(
       "CongestionWindow",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_s3_app2.cwnd")));
+          asciiTraceHelper.CreateFileStream("prac3_s4_app2.cwnd")));
 
   // Save cwnd changes App (b)
   ns3TcpSocket3->TraceConnectWithoutContext(
       "CongestionWindow",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_s3_app3.cwnd")));
+          asciiTraceHelper.CreateFileStream("prac3_s4_app3.cwnd")));
 
   // Save ssthresh of App (a)
   ns3TcpSocket1->TraceConnectWithoutContext(
       "SlowStartThreshold",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_s3_app1.ssthresh")));
+          asciiTraceHelper.CreateFileStream("prac3_s4_app1.ssthresh")));
 
   // Save ssthresh of App (b)
   ns3TcpSocket2->TraceConnectWithoutContext(
       "SlowStartThreshold",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_s3_app2.ssthresh")));
+          asciiTraceHelper.CreateFileStream("prac3_s4_app2.ssthresh")));
 
   // Save ssthresh of App (a)
   ns3TcpSocket3->TraceConnectWithoutContext(
       "SlowStartThreshold",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_s3_app3.ssthresh")));
+          asciiTraceHelper.CreateFileStream("prac3_s4_app3.ssthresh")));
 
   Simulator::Stop(Seconds(120));
   Simulator::Run();
