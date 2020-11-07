@@ -215,19 +215,19 @@ int main(int argc, char *argv[])
 
   Simulator::Schedule(Seconds(1.1),
                       &ReceivedBytes,
-                      asciiTraceHelper.CreateFileStream("prac3.rx"));
+                      asciiTraceHelper.CreateFileStream("prac3_1-1.rx"));
 
   ns3TcpSocket1->TraceConnectWithoutContext(
       "CongestionWindow",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_app1.cwnd")));
+          asciiTraceHelper.CreateFileStream("prac3_1-1.cwnd")));
 
   ns3TcpSocket1->TraceConnectWithoutContext(
       "SlowStartThreshold",
       MakeBoundCallback(
           &NotifyChange,
-          asciiTraceHelper.CreateFileStream("prac3_app1.ssthresh")));
+          asciiTraceHelper.CreateFileStream("prac3_1-1.ssthresh")));
 
   Simulator::Stop(Seconds(120));
   Simulator::Run();
