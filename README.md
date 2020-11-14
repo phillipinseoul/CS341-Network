@@ -56,6 +56,10 @@
 
 #### Task 2-1: Remove Congestion Avoidance & TCP Recovery, respectively.
   * 2-1-1: Change tcp-congestion-ops.cc (Remove Congestion Avoidance)
+    + Default TCP congestion control algorithm: New Reno
+    + src/internet/model/tcp-congestion-ops.cc
+    + src/internet/model/tcp-recovery-ops.cc
+    
 <img width="500" alt="20201115_012636" src="https://user-images.githubusercontent.com/59787386/99151941-0ac3ca80-26e2-11eb-9e3e-e951f9a0ac82.png">
 <img width="600" alt="2" src="https://user-images.githubusercontent.com/59787386/99152292-4495d080-26e4-11eb-9e90-612af457a090.png">
 
