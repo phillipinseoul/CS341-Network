@@ -23,13 +23,14 @@
   * Simulation Time: t = 0 - 120s
   
 <img width="647" alt="4" src="https://user-images.githubusercontent.com/59787386/99152541-bde1f300-26e5-11eb-9d98-cd79488fad97.png">
-
   
 #### Scenario 1: Only App (a) is running.
   * App (a)
     + Starts running on n2, at t = 1s
     + Sends total 25MB to n0 (port 8080)
     + Divides 25MB data into (1000 bytes) x (25,000 packets) & Data-rate is 2Mbps
+
+<img width="718" alt="5" src="https://user-images.githubusercontent.com/59787386/99152961-9f312b80-26e8-11eb-8e36-b1ea16756825.png">
     
 #### Scenario 2: App (a), (b) are running.
   * App (a): Same
@@ -37,6 +38,8 @@
     + Starts running on n3, at t = 15s
     + Sends total 25MB to n0 (port 8081)
     + Divides 25MB data into (1000 bytes) x (25,000 packets) & Data-rate is 5Mbps
+ 
+<img width="718" alt="6" src="https://user-images.githubusercontent.com/59787386/99152962-a0625880-26e8-11eb-9f3c-51de2c372c94.png">
     
 #### Scenario 3: App (a), (b), (c) are running.
   * App (a): Same
@@ -45,6 +48,8 @@
     + Starts running on n4, at t = 30s
     + Sends total 5MB to n0 (port 8082)
     + Divides 5MB data into (1000 bytes) x (5,000 packets) & Data-rate is 1Mbps
+
+<img width="718" alt="7" src="https://user-images.githubusercontent.com/59787386/99152965-a22c1c00-26e8-11eb-8d65-1382d17e7150.png">
     
 #### Scenario 4: App (a), (b), (c) are running & Receive Error from n1 to n0
   * App (a): Same
@@ -52,6 +57,8 @@
   * App (c): Same
   * Receive Error Rate (from n1 to n0): 1e-6
     + Using RateErrorModel in ns3 API
+    
+<img width="718" alt="8" src="https://user-images.githubusercontent.com/59787386/99152966-a48e7600-26e8-11eb-8db0-c7214aac0afd.png">
 
 
 ### Task 2
