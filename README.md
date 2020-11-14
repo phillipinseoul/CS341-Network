@@ -13,7 +13,9 @@
   2. Plot the graph for congestion control mechanism in each scenario (Use gnuplot).
     * TCP Throughput (.rx file)
     * Congestion Window Size (.cwnd file)
-    
+  3. How to run the simulation?
+    + Copy the .cc file to "scratch/" directory
+    + Run on ubuntu terminal: "./waf --run scratch/filename"
 
 #### Network Topology
   * Nodes: n0 - n4
@@ -68,3 +70,8 @@
 
   * 2-1-2: Change tcp-recovery-ops (Remove TCP Recovery)
 <img width="724" alt="3" src="https://user-images.githubusercontent.com/59787386/99152324-75760580-26e4-11eb-985b-5488b9601913.png">
+
+
+#### Task 2-2: Change Congestion Control Algorithms: Veno, Yeah
+  * Change the algorithm to Veno.
+  * Change the algorithm to Yeah.
