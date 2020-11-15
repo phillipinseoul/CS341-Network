@@ -22,12 +22,61 @@
   
 <img width="400" alt="10" src="https://user-images.githubusercontent.com/59787386/99161710-45585200-2738-11eb-973d-696a4dbfd4ca.png">
  
-   + flag field (16 bits): 0 (more packets), 1 (last packet)
-   + checksum field (16 bits): error checking
-   + keyword field (32 bits)
-   + sid field (32 bits): student ID
-   + length field (32 bits): MAX length = 10KB
-   + data field: string to be transmitted
+    > flag field (16 bits): 0 (more packets), 1 (last packet)
+    > checksum field (16 bits): error checking
+    > keyword field (32 bits)
+    > sid field (32 bits): student ID
+    > length field (32 bits): MAX length = 10KB
+    > data field: string to be transmitted
+
+#### What client shold do
+ 1. Send header
+   * Initial keyword could be any 4 letter word (lowercase) for testing (otherwise, 'sbmt')
+   * Server validates all packets.
+   
+ 2. Receive packets
+   * Server assigns you a random word as a key & sends packets containing encrypted data
+   * Client should receive all packets.
+   
+ 3. Send packets
+   * Client decrypts data with given key (XOR cipher) & sends packets
+   * Server gives full points if the lengh of received data and original data are the same.
+   * If given data is correctly decrypted, server sends a packet.
+   * Otherwise, server sends packet with error message
+   
+#### How to run
+  * python client.py --host=143.248.56.39 --port=4000 --studentID=20000000
+  * When using struct library, format string is '!HH4sll'
+  * Use python struct, socket library
+  
+ 
+### Task 2: Basic Server Using Sockets
+  * Implement a server that listens to a socket port & handle multiple concurrent clients.
+  * Server generates a UUID for each client. (Use python uuid.uuid3)
+  * Client will send multiple simultaneous requests to server.
+  
+#### Request Types
+  1. FIBONACCI
+    > Client sends a message with body "FIBONACCI"
+    > After a short pause, it sends a number n
+    > Your server has to calculate the n-th Fibonacci number & return the result to the client
+    
+  2. FACTORIAL
+    > Client sends a message with body "FACTORIAL"
+    > After a short pause, it sends a number n
+    > Your server has to calculate the Factorial of n & return the result to the client
+    
+  3. WORD_COUNT
+    > Client sends a message with body "WORD_COUNT"
+    > After a short pause, it sends a text file
+    > Your server has to receive the complete text file & count how many words are inside (count whitespaces!)
+    
+  4. COMPLETE
+    > Client is done & close the socket
+    
+#### How to run
+  * python server.py --port=1234
+  * ./client --port=1234 --studentID=20000000 --submit=False
 
 
 * * *
