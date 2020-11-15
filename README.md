@@ -18,8 +18,16 @@
   
 #### Protocol Specification
   * Byte order follows network order.
+  * Header
   
-<img width="490" alt="10" src="https://user-images.githubusercontent.com/59787386/99161710-45585200-2738-11eb-973d-696a4dbfd4ca.png">
+<img width="400" alt="10" src="https://user-images.githubusercontent.com/59787386/99161710-45585200-2738-11eb-973d-696a4dbfd4ca.png">
+ 
+  * flag field (16 bits): 0 (more packets), 1 (last packet)
+  * checksum field (16 bits): error checking
+  * keyword field (32 bits)
+  * sid field (32 bits): student ID
+  * length field (32 bits): MAX length = 10KB
+  * data field: string to be transmitted
 
 
 * * *
