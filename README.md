@@ -5,6 +5,16 @@
 3. Practice #3: Congestion Control Simulation (NS3, C++)
 
 
+## Practice #2: TCP Socket Communication (Python)
+"Implement a connection-oriented, client-server protocol based on given specification."
+"Understand the mechanism of TCP Handshake."
+
+### Task 1: Basic String Decryption Service
+
+
+* * *
+
+
 ## Practice #3: Congestion Control Simulation (NS3)
 "Understand why we need TCP congestion algorithm, and how the network can handle the congestion controls."
 
