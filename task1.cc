@@ -88,12 +88,14 @@ int main (int argc, char **argv)
 //-----------------------------------------------------------------------------
 Task1::Task1 () :
   size (6),
-  width (5),
+  width (20),
   height (30),
   totalTime (100),
   printRoutes (true)
 {
 }
+// task 1.3: width = 20
+
 
 void
 Task1::Run ()
