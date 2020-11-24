@@ -7,6 +7,8 @@
 #### [Adding git remote]
 * git remote add origin https://...
 * git remote show origin # If everything is ok, you will see your remote
+* git branch --set-upstream=origin/<branch> master
+* git pull origin <branch> --allow-unrelated-histories
 * git push -u origin master # Assuming you are on the master branch.
 
 
