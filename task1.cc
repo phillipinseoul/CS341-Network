@@ -95,6 +95,7 @@ Task1::Task1 () :
 {
 }
 // task 1.3: width = 20
+// task 1.4: height = 51
 
 
 void
