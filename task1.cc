@@ -1,7 +1,7 @@
 /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 IITP RAS
- * hu
+ * helloworld
  * 
  *
  * This program is free software; you can redistribute it and/or modify
