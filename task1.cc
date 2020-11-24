@@ -139,7 +139,8 @@ Task1::CreateNodes ()
   mobility.Install (nodes);
 
   // DELETE THIS CODE!
-  // iterate our nodes and print their position.
+  // iterate our nodes and print their position
+  /*
   for (NodeContainer::Iterator j = nodes.Begin(); j != nodes.End(); ++j)
       {
         Ptr<Node> object = *j;
@@ -148,6 +149,7 @@ Task1::CreateNodes ()
         Vector pos = position->GetPosition();
         std::cout << "x=" << pos.x << ", y=" << pos.y << ", z=" << pos.z << std::endl;
       }
+  */
 }
 
 void
