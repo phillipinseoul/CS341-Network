@@ -82,9 +82,9 @@ int main (int argc, char **argv)
 
 //-----------------------------------------------------------------------------
 Task2::Task2 () :
-  size (5),
-  width (10),
-  height (10),
+  size (10),
+  width (50),
+  height (0),
   totalTime (100),
   printRoutes (true)
 {
@@ -168,10 +168,11 @@ Task2::InstallInternetStack ()
 void
 Task2::InstallApplications ()
 {
-  V4PingHelper ping (interfaces.GetAddress (9));
+  // Ping from Node J to Node C
+  V4PingHelper ping (interfaces.GetAddress (9));  // 9 -> Node J
   ping.SetAttribute ("Verbose", BooleanValue (true));
 
-  ApplicationContainer p = ping.Install (nodes.Get (2));
+  ApplicationContainer p = ping.Install (nodes.Get (2));  // 2 -> Node C
   p.Start (Seconds (0));
   p.Stop (Seconds (totalTime) - Seconds (0.001));
 
