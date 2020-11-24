@@ -4,6 +4,11 @@
 2. Practice #2: TCP Socket Communication (Python)
 3. Practice #3: Congestion Control Simulation (NS3, C++)
 
+[Adding git remote]
+git remote add origin https://...
+git remote show origin # If everything is ok, you will see your remote
+git push -u origin master # Assuming you are on the master branch.
+
 
 * * *
 
