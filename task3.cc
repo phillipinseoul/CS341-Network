@@ -83,7 +83,7 @@ int main (int argc, char **argv)
 
 //-----------------------------------------------------------------------------
 Task3::Task3 () :
-  size (5),
+  size (6),
   width (1),
   height (0),
   totalTime (100),
@@ -112,7 +112,7 @@ Task3::Run ()
 void
 Task3::CreateNodes ()
 {
-  std::cout << "Creating " << (unsigned)size << " nodes " << width << " m apart.\n";
+  std::cout << "Creating " << (unsigned)size << " nodes.\n";
   nodes.Create (size);
   // Name nodes
   for (uint32_t i = 0; i < size; ++i)
@@ -123,11 +123,30 @@ Task3::CreateNodes ()
     }
   // Create static grid
   MobilityHelper mobility;
-  ListPositionAllocator posAllocator;
-  // * You might need to adjust the number of nodes in the simulation
+  // ListPositionAllocator posAllocator;
+  Ptr<ListPositionAllocator> posAllocator = CreateObject<ListPositionAllocator> ();
 
+  posAllocator->Add(Vector(0, 0, 0));
+  posAllocator->Add(Vector(25, 25, 0));
+  posAllocator->Add(Vector(40, 10, 0));
+  posAllocator->Add(Vector(50, 0, 0));
+  posAllocator->Add(Vector(50, 50, 0));
+  posAllocator->Add(Vector(100, 50, 0));
+
+  mobility.SetPositionAllocator (posAllocator);
   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
   mobility.Install (nodes);
+
+  // DELETE THIS CODE!
+  // iterate our nodes and print their position
+  for (NodeContainer::Iterator j = nodes.Begin(); j != nodes.End(); ++j)
+      {
+        Ptr<Node> object = *j;
+        Ptr<MobilityModel> position = object->GetObject<MobilityModel>();
+        NS_ASSERT(position != 0);
+        Vector pos = position->GetPosition();
+        std::cout << "x=" << pos.x << ", y=" << pos.y << ", z=" << pos.z << std::endl;
+      }
 }
 
 void
@@ -166,9 +185,10 @@ Task3::InstallInternetStack ()
 void
 Task3::InstallApplications ()
 {
-  V4TraceRouteHelper traceroute (Ipv4Address ("10.0.0.5"));
+  // Traceroute from Node C to Node E
+  V4TraceRouteHelper traceroute (Ipv4Address ("10.0.0.5"));   // Node E
   traceroute.SetAttribute ("Verbose", BooleanValue (true));
-  ApplicationContainer p = traceroute.Install (nodes.Get (2));
+  ApplicationContainer p = traceroute.Install (nodes.Get (2));  // Node C
 
   p.Start (Seconds (0));
   p.Stop (Seconds (totalTime) - Seconds (0.001));
