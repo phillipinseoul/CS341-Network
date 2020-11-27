@@ -131,6 +131,19 @@ Task2::CreateNodes ()
                                  "LayoutType", StringValue ("RowFirst"));
   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
   mobility.Install (nodes);
+
+  // DELETE THIS CODE!
+  // iterate our nodes and print their position
+  /*
+  for (NodeContainer::Iterator j = nodes.Begin(); j != nodes.End(); ++j)
+      {
+        Ptr<Node> object = *j;
+        Ptr<MobilityModel> position = object->GetObject<MobilityModel>();
+        NS_ASSERT(position != 0);
+        Vector pos = position->GetPosition();
+        std::cout << "x=" << pos.x << ", y=" << pos.y << ", z=" << pos.z << std::endl;
+      }
+  */
 }
 
 void
@@ -177,9 +190,9 @@ Task2::InstallApplications ()
   p.Stop (Seconds (totalTime) - Seconds (0.001));
 
   // Move selected node away
-  // Ptr<Node> node = nodes.Get (size/2);
-  // Ptr<MobilityModel> mob = node->GetObject<MobilityModel> ();
+  Ptr<Node> node = nodes.Get (7);   // Get Node H
+  Ptr<MobilityModel> mob = node->GetObject<MobilityModel> ();
   
   // Modify this line to satisfy the movement condition from the task 
-  // Simulator::Schedule (Seconds (totalTime / 3), &MobilityModel::SetPosition, mob, Vector (0, 0, 0));
+  Simulator::Schedule (Seconds (totalTime / 3), &MobilityModel::SetPosition, mob, Vector (75, 0, 0));   // Move Node H to between B and C
 }
