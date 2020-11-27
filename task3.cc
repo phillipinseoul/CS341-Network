@@ -179,16 +179,22 @@ Task3::InstallInternetStack ()
     {
       Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> ("scratch/task3.routes", std::ios::out);
       aodv.PrintRoutingTableAllAt (Seconds (totalTime - 1), routingStream);
-    }
 }
 
 void
 Task3::InstallApplications ()
 {
   // Traceroute from Node C to Node E
+  /*
   V4TraceRouteHelper traceroute (Ipv4Address ("10.0.0.5"));   // Node E
   traceroute.SetAttribute ("Verbose", BooleanValue (true));
   ApplicationContainer p = traceroute.Install (nodes.Get (2));  // Node C
+  */
+
+  // Traceroute from Node A to Node F
+  V4TraceRouteHelper traceroute (Ipv4Address ("10.0.0.6"));   // Node F
+  traceroute.SetAttribute ("Verbose", BooleanValue (true));
+  ApplicationContainer p = traceroute.Install (nodes.Get (0));  // Node A
 
   p.Start (Seconds (0));
   p.Stop (Seconds (totalTime) - Seconds (0.001));
