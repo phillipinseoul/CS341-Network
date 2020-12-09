@@ -1,4 +1,4 @@
-# KAIST-CS341-Introduction-to-Networks (20 Fall)
+# Introduction-to-Networks (CS341, 20 Fall)
 
 1. Practice #1: Simple Web Communication (Python)
 2. Practice #2: TCP Socket Communication (Python)
