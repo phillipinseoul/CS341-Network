@@ -191,18 +191,17 @@ Task2::InstallInternetStack ()
 void
 Task2::InstallApplications ()
 {
-  // Ping from Node J to Node C
-  V4PingHelper ping (interfaces.GetAddress (9));  // 9 -> Node J
+  // Ping from Node C to Node J
+  V4PingHelper ping (interfaces.GetAddress (9)); 
   ping.SetAttribute ("Verbose", BooleanValue (true));
 
-  ApplicationContainer p = ping.Install (nodes.Get (2));  // 2 -> Node C
+  ApplicationContainer p = ping.Install (nodes.Get (2)); 
   p.Start (Seconds (0));
   p.Stop (Seconds (totalTime) - Seconds (0.001));
 
-  // Move selected node away
+  // Move Node H to between B and C
   Ptr<Node> node = nodes.Get (7);   // Get Node H
   Ptr<MobilityModel> mob = node->GetObject<MobilityModel> ();
   
-  // Modify this line to satisfy the movement condition from the task 
-  Simulator::Schedule (Seconds (totalTime / 3), &MobilityModel::SetPosition, mob, Vector (75, 0, 0));   // Move Node H to between B and C
+  Simulator::Schedule (Seconds (totalTime / 3), &MobilityModel::SetPosition, mob, Vector (75, 0, 0));
 }

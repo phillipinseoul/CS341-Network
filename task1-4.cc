@@ -1,6 +1,8 @@
 /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 IITP RAS
+ * helloworld
+ * 
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -32,10 +34,15 @@
 
 using namespace ns3;
 
-class Task2 
+class Task1 
 {
 public:
-  Task2 ();
+  Task1 ();
+  /**
+   * \param argc is the command line argument count
+   * \param argv is the command line arguments
+   * \return true on successful configuration
+  */
   /// Run simulation
   void Run ();
 
@@ -68,59 +75,47 @@ private:
   void CreateDevices ();
   /// Create the network
   void InstallInternetStack ();
-  /// Create the simulation applications
-  void InstallApplications ();
 };
 
 int main (int argc, char **argv)
 {
-  Task2 test;
+  Task1 test;
 
   test.Run ();
   return 0;
 }
 
 //-----------------------------------------------------------------------------
-Task2::Task2 () :
-  size (10),
-  width (50),
-  height (0),
+Task1::Task1 () :
+  size (6),
+  width (20),
+  height (30),
   totalTime (100),
   printRoutes (true)
 {
 }
+// task 1.3: width = 20
+// task 1.4: height = 51
 
 
 void
-Task2::Run ()
+Task1::Run ()
 {
-//  Config::SetDefault ("ns3::WifiRemoteStationManager::RtsCtsThreshold", UintegerValue (1)); // enable rts cts all the time.
   CreateNodes ();
   CreateDevices ();
   InstallInternetStack ();
-  InstallApplications ();
+
 
   std::cout << "Starting simulation for " << totalTime << " s ...\n";
 
   Simulator::Stop (Seconds (totalTime));
   Simulator::Run ();
-
-  // DELETE THIS CODE!
-  for (NodeContainer::Iterator j = nodes.Begin(); j != nodes.End(); ++j)
-      {
-        Ptr<Node> object = *j;
-        Ptr<MobilityModel> position = object->GetObject<MobilityModel>();
-        NS_ASSERT(position != 0);
-        Vector pos = position->GetPosition();
-        std::cout << "x=" << pos.x << ", y=" << pos.y << ", z=" << pos.z << std::endl;
-      }
-
   Simulator::Destroy ();
 }
 
 
 void
-Task2::CreateNodes ()
+Task1::CreateNodes ()
 {
   std::cout << "Creating " << (unsigned)size << " nodes " << width << " m apart.\n";
   nodes.Create (size);
@@ -138,13 +133,14 @@ Task2::CreateNodes ()
                                  "MinY", DoubleValue (0.0),
                                  "DeltaX", DoubleValue (width),
                                  "DeltaY", DoubleValue (height),
-                                 "GridWidth", UintegerValue (size),
+                                 "GridWidth", UintegerValue (3),
                                  "LayoutType", StringValue ("RowFirst"));
   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
   mobility.Install (nodes);
 
   // DELETE THIS CODE!
   // iterate our nodes and print their position
+  /*
   for (NodeContainer::Iterator j = nodes.Begin(); j != nodes.End(); ++j)
       {
         Ptr<Node> object = *j;
@@ -153,11 +149,11 @@ Task2::CreateNodes ()
         Vector pos = position->GetPosition();
         std::cout << "x=" << pos.x << ", y=" << pos.y << ", z=" << pos.z << std::endl;
       }
-  
+  */
 }
 
 void
-Task2::CreateDevices ()
+Task1::CreateDevices ()
 {
   WifiMacHelper wifiMac;
   wifiMac.SetType ("ns3::AdhocWifiMac");
@@ -170,7 +166,7 @@ Task2::CreateDevices ()
 }
 
 void
-Task2::InstallInternetStack ()
+Task1::InstallInternetStack ()
 {
   AodvHelper aodv;
   // you can configure AODV attributes here using aodv.Set(name, value)
@@ -183,25 +179,7 @@ Task2::InstallInternetStack ()
 
   if (printRoutes)
     {
-      Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> ("scratch/task2.routes", std::ios::out);
-      aodv.PrintRoutingTableAllAt (Seconds (totalTime / 2), routingStream);
+      Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> ("scratch/task1.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (10), routingStream);
     }
-}
-
-void
-Task2::InstallApplications ()
-{
-  // Ping from Node J to Node C
-  V4PingHelper ping (interfaces.GetAddress (2)); 
-  ping.SetAttribute ("Verbose", BooleanValue (true));
-
-  ApplicationContainer p = ping.Install (nodes.Get (9)); 
-  p.Start (Seconds (0));
-  p.Stop (Seconds (totalTime) - Seconds (0.001));
-
-  // Move Node H to between B and C
-  Ptr<Node> node = nodes.Get (7);   // Get Node H
-  Ptr<MobilityModel> mob = node->GetObject<MobilityModel> ();
-  
-  Simulator::Schedule (Seconds (totalTime / 3), &MobilityModel::SetPosition, mob, Vector (75, 0, 0)); 
-}
+} 

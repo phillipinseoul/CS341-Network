@@ -131,19 +131,6 @@ Task2::CreateNodes ()
                                  "LayoutType", StringValue ("RowFirst"));
   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
   mobility.Install (nodes);
-
-  // DELETE THIS CODE!
-  // iterate our nodes and print their position
-  /*
-  for (NodeContainer::Iterator j = nodes.Begin(); j != nodes.End(); ++j)
-      {
-        Ptr<Node> object = *j;
-        Ptr<MobilityModel> position = object->GetObject<MobilityModel>();
-        NS_ASSERT(position != 0);
-        Vector pos = position->GetPosition();
-        std::cout << "x=" << pos.x << ", y=" << pos.y << ", z=" << pos.z << std::endl;
-      }
-  */
 }
 
 void
@@ -163,7 +150,6 @@ void
 Task2::InstallInternetStack ()
 {
   AodvHelper aodv;
-  // you can configure AODV attributes here using aodv.Set(name, value)
   InternetStackHelper stack;
   stack.SetRoutingHelper (aodv); // has effect on the next Install ()
   stack.Install (nodes);
@@ -181,18 +167,35 @@ Task2::InstallInternetStack ()
 void
 Task2::InstallApplications ()
 {
+  /* Task 2.2.4 */
   // Ping from Node J to Node C
-  V4PingHelper ping (interfaces.GetAddress (9));  // 9 -> Node J
+  V4PingHelper ping (interfaces.GetAddress (2)); 
   ping.SetAttribute ("Verbose", BooleanValue (true));
 
-  ApplicationContainer p = ping.Install (nodes.Get (2));  // 2 -> Node C
+  ApplicationContainer p = ping.Install (nodes.Get (9)); 
   p.Start (Seconds (0));
   p.Stop (Seconds (totalTime) - Seconds (0.001));
 
-  // Move selected node away
+  // Move Node H to between B and C
   Ptr<Node> node = nodes.Get (7);   // Get Node H
   Ptr<MobilityModel> mob = node->GetObject<MobilityModel> ();
   
-  // Modify this line to satisfy the movement condition from the task 
-  Simulator::Schedule (Seconds (totalTime / 3), &MobilityModel::SetPosition, mob, Vector (75, 0, 0));   // Move Node H to between B and C
+  Simulator::Schedule (Seconds (totalTime / 3), &MobilityModel::SetPosition, mob, Vector (75, 0, 0)); 
+
+  /* Task 2.2.2 */
+  /*
+  // Ping from Node C to Node J
+  V4PingHelper ping (interfaces.GetAddress (9)); 
+  ping.SetAttribute ("Verbose", BooleanValue (true));
+
+  ApplicationContainer p = ping.Install (nodes.Get (2)); 
+  p.Start (Seconds (0));
+  p.Stop (Seconds (totalTime) - Seconds (0.001));
+
+  // Move Node H to between B and C
+  Ptr<Node> node = nodes.Get (7);   // Get Node H
+  Ptr<MobilityModel> mob = node->GetObject<MobilityModel> ();
+  
+  Simulator::Schedule (Seconds (totalTime / 3), &MobilityModel::SetPosition, mob, Vector (75, 0, 0)); 
+  */
 }

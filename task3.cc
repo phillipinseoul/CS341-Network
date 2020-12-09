@@ -83,7 +83,8 @@ int main (int argc, char **argv)
 
 //-----------------------------------------------------------------------------
 Task3::Task3 () :
-  size (6),
+  size (5),   // Task3.2.1
+  // size (6), // Task3.1
   width (1),
   height (0),
   totalTime (100),
@@ -126,27 +127,36 @@ Task3::CreateNodes ()
   // ListPositionAllocator posAllocator;
   Ptr<ListPositionAllocator> posAllocator = CreateObject<ListPositionAllocator> ();
 
+  // Task3.2.1
+  posAllocator->Add(Vector(-15, 0, 0));
+  posAllocator->Add(Vector(15, 0, 0));
+  posAllocator->Add(Vector(39.21, 17.72, 0));
+  posAllocator->Add(Vector(0, 48.74, 0));
+  posAllocator->Add(Vector(-39.21, 17.72, 0));
+
+  // Task3.1.1
+  /*
   posAllocator->Add(Vector(0, 0, 0));
   posAllocator->Add(Vector(25, 25, 0));
   posAllocator->Add(Vector(40, 10, 0));
   posAllocator->Add(Vector(50, 0, 0));
   posAllocator->Add(Vector(50, 50, 0));
   posAllocator->Add(Vector(100, 50, 0));
+  */
+
+  // Task3.1.2
+  /*
+  posAllocator->Add(Vector(0, 0, 0));
+  posAllocator->Add(Vector(0, 50, 0));
+  posAllocator->Add(Vector(40, 10, 0));
+  posAllocator->Add(Vector(50, 0, 0));
+  posAllocator->Add(Vector(50, 50, 0));
+  posAllocator->Add(Vector(100, 50, 0));
+  */
 
   mobility.SetPositionAllocator (posAllocator);
   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
   mobility.Install (nodes);
-
-  // DELETE THIS CODE!
-  // iterate our nodes and print their position
-  for (NodeContainer::Iterator j = nodes.Begin(); j != nodes.End(); ++j)
-      {
-        Ptr<Node> object = *j;
-        Ptr<MobilityModel> position = object->GetObject<MobilityModel>();
-        NS_ASSERT(position != 0);
-        Vector pos = position->GetPosition();
-        std::cout << "x=" << pos.x << ", y=" << pos.y << ", z=" << pos.z << std::endl;
-      }
 }
 
 void
@@ -179,22 +189,24 @@ Task3::InstallInternetStack ()
     {
       Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> ("scratch/task3.routes", std::ios::out);
       aodv.PrintRoutingTableAllAt (Seconds (totalTime - 1), routingStream);
+    }
 }
 
 void
 Task3::InstallApplications ()
 {
+  /* Task 3.2.1 */
   // Traceroute from Node C to Node E
-  /*
-  V4TraceRouteHelper traceroute (Ipv4Address ("10.0.0.5"));   // Node E
+  V4TraceRouteHelper traceroute (Ipv4Address ("10.0.0.5"));   // Node C
   traceroute.SetAttribute ("Verbose", BooleanValue (true));
-  ApplicationContainer p = traceroute.Install (nodes.Get (2));  // Node C
-  */
+  ApplicationContainer p = traceroute.Install (nodes.Get (2));  // Node E
 
-  // Traceroute from Node A to Node F
+  /* Task 3.1: Traceroute from Node A to Node F */
+  /*
   V4TraceRouteHelper traceroute (Ipv4Address ("10.0.0.6"));   // Node F
   traceroute.SetAttribute ("Verbose", BooleanValue (true));
   ApplicationContainer p = traceroute.Install (nodes.Get (0));  // Node A
+  */
 
   p.Start (Seconds (0));
   p.Stop (Seconds (totalTime) - Seconds (0.001));

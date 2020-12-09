@@ -127,8 +127,8 @@ Task3::CreateNodes ()
   Ptr<ListPositionAllocator> posAllocator = CreateObject<ListPositionAllocator> ();
 
   posAllocator->Add(Vector(0, 0, 0));
-  posAllocator->Add(Vector(0, 50, 0));
   posAllocator->Add(Vector(40, 10, 0));
+  posAllocator->Add(Vector(25, 25, 0));
   posAllocator->Add(Vector(50, 0, 0));
   posAllocator->Add(Vector(50, 50, 0));
   posAllocator->Add(Vector(100, 50, 0));
@@ -177,8 +177,30 @@ Task3::InstallInternetStack ()
 
   if (printRoutes)
     {
-      Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> ("scratch/task3.routes", std::ios::out);
-      aodv.PrintRoutingTableAllAt (Seconds (totalTime - 1), routingStream);
+      // Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> ("scratch/task3.routes", std::ios::out);
+      // aodv.PrintRoutingTableAllAt (Seconds (totalTime - 1), routingStream);
+
+      Ptr<OutputStreamWrapper> routingStream1 = Create<OutputStreamWrapper> ("scratch/task3_0.0001.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.0001), routingStream1);
+      Ptr<OutputStreamWrapper> routingStream2 = Create<OutputStreamWrapper> ("scratch/task3_0.001.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.001), routingStream2);
+      Ptr<OutputStreamWrapper> routingStream3 = Create<OutputStreamWrapper> ("scratch/task3_0.005.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.005), routingStream3);
+      Ptr<OutputStreamWrapper> routingStream4 = Create<OutputStreamWrapper> ("scratch/task3_0.01.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.01), routingStream4);
+      Ptr<OutputStreamWrapper> routingStream5 = Create<OutputStreamWrapper> ("scratch/task3_0.03.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.03), routingStream5);
+      Ptr<OutputStreamWrapper> routingStream6 = Create<OutputStreamWrapper> ("scratch/task3_0.08.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.08), routingStream6);
+      Ptr<OutputStreamWrapper> routingStream7 = Create<OutputStreamWrapper> ("scratch/task3_0.15.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.15), routingStream7);
+      Ptr<OutputStreamWrapper> routingStream8 = Create<OutputStreamWrapper> ("scratch/task3_0.2.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.2), routingStream8);
+      Ptr<OutputStreamWrapper> routingStream9 = Create<OutputStreamWrapper> ("scratch/task3_0.22.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.22), routingStream9);
+      Ptr<OutputStreamWrapper> routingStream10 = Create<OutputStreamWrapper> ("scratch/task3_0.24.routes", std::ios::out);
+      aodv.PrintRoutingTableAllAt (Seconds (0.24), routingStream10);
+    }
 }
 
 void

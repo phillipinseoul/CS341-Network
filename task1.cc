@@ -86,16 +86,39 @@ int main (int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------
+// Task 1.4
 Task1::Task1 () :
   size (6),
-  width (20),
+  width (5),
+  height (52), 
+  totalTime (100),
+  printRoutes (true)
+{
+}
+
+// Task 1.3
+/*
+Task1::Task1 () :
+  size (6),
+  width (20); // Task1.3
   height (30),
   totalTime (100),
   printRoutes (true)
 {
 }
-// task 1.3: width = 20
-// task 1.4: height = 51
+*/
+
+// Task 1.2
+/*
+Task1::Task1 () :
+  size (6),
+  width (5); 
+  height (30),
+  totalTime (100),
+  printRoutes (true)
+{
+}
+*/ 
 
 
 void
@@ -133,23 +156,10 @@ Task1::CreateNodes ()
                                  "MinY", DoubleValue (0.0),
                                  "DeltaX", DoubleValue (width),
                                  "DeltaY", DoubleValue (height),
-                                 "GridWidth", UintegerValue (3),
+                                 "GridWidth", UintegerValue (3),    // Allow max 3 nodes per row
                                  "LayoutType", StringValue ("RowFirst"));
   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
   mobility.Install (nodes);
-
-  // DELETE THIS CODE!
-  // iterate our nodes and print their position
-  /*
-  for (NodeContainer::Iterator j = nodes.Begin(); j != nodes.End(); ++j)
-      {
-        Ptr<Node> object = *j;
-        Ptr<MobilityModel> position = object->GetObject<MobilityModel>();
-        NS_ASSERT(position != 0);
-        Vector pos = position->GetPosition();
-        std::cout << "x=" << pos.x << ", y=" << pos.y << ", z=" << pos.z << std::endl;
-      }
-  */
 }
 
 void
@@ -169,9 +179,8 @@ void
 Task1::InstallInternetStack ()
 {
   AodvHelper aodv;
-  // you can configure AODV attributes here using aodv.Set(name, value)
   InternetStackHelper stack;
-  stack.SetRoutingHelper (aodv); // has effect on the next Install ()
+  stack.SetRoutingHelper (aodv);
   stack.Install (nodes);
   Ipv4AddressHelper address;
   address.SetBase ("10.0.0.0", "255.0.0.0");
